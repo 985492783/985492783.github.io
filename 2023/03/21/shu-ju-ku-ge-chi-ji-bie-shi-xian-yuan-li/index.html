@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="数据库ACID, Hexo">
+    <meta name="keywords" content="数据库隔离级别实现原理, Hexo">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>数据库ACID | Hexo</title>
+    <title>数据库隔离级别实现原理 | Hexo</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">数据库ACID</h1>
+                    <h1 class="description center-align post-title">数据库隔离级别实现原理</h1>
                 </div>
             </div>
         </div>
@@ -474,7 +474,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1
+                    272
                 </div>
                 
 
@@ -504,7 +504,23 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="ACID"><a href="#ACID" class="headerlink" title="ACID"></a>ACID</h3>
+                <h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><blockquote>
+<p>数据库事务是指在同一事务的一组数据操作，要不全部成功，要不全部失败，有一步失败，就要回滚全部操作<br>事务具有原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation）、持久性（Durability）四个特性，简称 ACID，缺一不可。</p>
+</blockquote>
+<h3 id="为什么需要隔离性"><a href="#为什么需要隔离性" class="headerlink" title="为什么需要隔离性"></a>为什么需要隔离性</h3><p>如果没有隔离性，那么会带来很多问题<br>不同的两个事务之间没有屏障，导致数据混乱<br>四个概念：</p>
+<ul>
+<li>脏读<blockquote>
+<p>脏读是指读到了别的事务还没提交的数据。如果A事务的数据尚未提交而被B事务读取，而A事务发生异常回滚，那么会导致B事务读到脏数据</p>
+</blockquote>
+</li>
+<li>幻读<blockquote>
+<p>幻读的意思是一个事务两次对数据查询的条数不一致，例如B事务在A事务的第一个查询的时候没有操作，但是在第二个查询的之前产生了<code>Insert</code>操作并且提交，就会导致两次查询不一致</p>
+</blockquote>
+</li>
+<li>可重复读</li>
+<li>不可重复度</li>
+</ul>
+
                 
             </div>
             <hr/>
@@ -530,7 +546,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://985492783.github.io/2023/03/21/shu-ju-ku-acid/">https://985492783.github.io/2023/03/21/shu-ju-ku-acid/</a>
+                    <a href="https://985492783.github.io/2023/03/21/shu-ju-ku-ge-chi-ji-bie-shi-xian-yuan-li/">https://985492783.github.io/2023/03/21/shu-ju-ku-ge-chi-ji-bie-shi-xian-yuan-li/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -748,13 +764,13 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2023/03/21/shu-ju-ku-acid/">
+                <a href="/2023/03/21/shu-ju-ku-ge-chi-ji-bie-shi-xian-yuan-li/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="数据库ACID">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="数据库隔离级别实现原理">
                         
-                        <span class="card-title">数据库ACID</span>
+                        <span class="card-title">数据库隔离级别实现原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -802,13 +818,13 @@
                 本篇&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
-                <a href="/2023/03/21/shu-ju-ku-acid/">
+                <a href="/2023/03/21/shu-ju-ku-ge-chi-ji-bie-shi-xian-yuan-li/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="数据库ACID">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="数据库隔离级别实现原理">
                         
-                        <span class="card-title">数据库ACID</span>
+                        <span class="card-title">数据库隔离级别实现原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1045,7 +1061,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1</span>&nbsp;字
+                class="white-color">272</span>&nbsp;字
             
             
             

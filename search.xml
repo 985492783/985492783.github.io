@@ -4,11 +4,11 @@
   
     
     <entry>
-      <title>数据库ACID</title>
-      <link href="/2023/03/21/shu-ju-ku-acid/"/>
-      <url>/2023/03/21/shu-ju-ku-acid/</url>
+      <title>数据库隔离级别实现原理</title>
+      <link href="/2023/03/21/shu-ju-ku-ge-chi-ji-bie-shi-xian-yuan-li/"/>
+      <url>/2023/03/21/shu-ju-ku-ge-chi-ji-bie-shi-xian-yuan-li/</url>
       
-        <content type="html"><![CDATA[<h3 id="ACID"><a href="#ACID" class="headerlink" title="ACID"></a>ACID</h3>]]></content>
+        <content type="html"><![CDATA[<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><blockquote><p>数据库事务是指在同一事务的一组数据操作，要不全部成功，要不全部失败，有一步失败，就要回滚全部操作<br>事务具有原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation）、持久性（Durability）四个特性，简称 ACID，缺一不可。</p></blockquote><h3 id="为什么需要隔离性"><a href="#为什么需要隔离性" class="headerlink" title="为什么需要隔离性"></a>为什么需要隔离性</h3><p>如果没有隔离性，那么会带来很多问题<br>不同的两个事务之间没有屏障，导致数据混乱<br>四个概念：</p><ul><li>脏读<blockquote><p>脏读是指读到了别的事务还没提交的数据。如果A事务的数据尚未提交而被B事务读取，而A事务发生异常回滚，那么会导致B事务读到脏数据</p></blockquote></li><li>幻读<blockquote><p>幻读的意思是一个事务两次对数据查询的条数不一致，例如B事务在A事务的第一个查询的时候没有操作，但是在第二个查询的之前产生了<code>Insert</code>操作并且提交，就会导致两次查询不一致</p></blockquote></li><li>可重复读</li><li>不可重复度</li></ul>]]></content>
       
       
       <categories>
