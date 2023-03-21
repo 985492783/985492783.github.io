@@ -474,7 +474,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    272
+                    494
                 </div>
                 
 
@@ -517,10 +517,59 @@
 <p>幻读的意思是一个事务两次对数据查询的条数不一致，例如B事务在A事务的第一个查询的时候没有操作，但是在第二个查询的之前产生了<code>Insert</code>操作并且提交，就会导致两次查询不一致</p>
 </blockquote>
 </li>
-<li>可重复读</li>
-<li>不可重复度</li>
+<li>可重复读<blockquote>
+<p>可重复读的意思是在同一个事务任意时刻读到的同一批数据都是一致的。</p>
+</blockquote>
+</li>
+<li>不可重复度<blockquote>
+<p>与可重复读相反，在同一事务的某个时刻读到与第一次读到的数据不一致，一般是被本事务的<code>update</code>所修改</p>
+</blockquote>
+</li>
 </ul>
-
+<h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><ol>
+<li>读未提交（READ UNCOMMITTED）</li>
+<li>读提交 （READ COMMITTED）</li>
+<li>可重复读 （REPEATABLE READ）</li>
+<li>串行化 （SERIALIZABLE）</li>
+</ol>
+<blockquote>
+<p>从上往下，隔离强度逐渐增强，性能逐渐变差。采用哪种隔离级别要根据系统需求权衡决定，其中，可重复读是 MySQL 的默认级别。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">隔离级别</th>
+<th align="center">脏读</th>
+<th align="center">不可重复读</th>
+<th align="center">幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">读未提交</td>
+<td align="center">可能</td>
+<td align="center">可能</td>
+<td align="center">可能</td>
+</tr>
+<tr>
+<td align="center">读已提交</td>
+<td align="center">不可能</td>
+<td align="center">可能</td>
+<td align="center">可能</td>
+</tr>
+<tr>
+<td align="center">可重复读</td>
+<td align="center">不可能</td>
+<td align="center">不可能</td>
+<td align="center">可能</td>
+</tr>
+<tr>
+<td align="center">串行化</td>
+<td align="center">不可能</td>
+<td align="center">不可能</td>
+<td align="center">不可能</td>
+</tr>
+</tbody></table>
+<h3 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h3><h3 id="问题一：RR是否可以解决幻读"><a href="#问题一：RR是否可以解决幻读" class="headerlink" title="问题一：RR是否可以解决幻读"></a>问题一：RR是否可以解决幻读</h3>
                 
             </div>
             <hr/>
@@ -759,18 +808,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/03/21/shu-ju-ku-ge-chi-ji-bie-shi-xian-yuan-li/">
+                <a href="/2023/03/21/sentinel-xian-liu-yuan-li/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="数据库隔离级别实现原理">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="sentinel限流原理">
                         
-                        <span class="card-title">数据库隔离级别实现原理</span>
+                        <span class="card-title">sentinel限流原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -780,31 +828,30 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-21
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-21
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/mysql/" class="post-category">
-                                    mysql
+                            <a href="/categories/sentinel/" class="post-category">
+                                    sentinel
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                        <span class="chip bg-color">数据库</span>
+                    <a href="/tags/sentinel/">
+                        <span class="chip bg-color">sentinel</span>
                     </a>
                     
-                    <a href="/tags/%E5%8E%9F%E5%AD%90%E6%80%A7/">
-                        <span class="chip bg-color">原子性</span>
+                    <a href="/tags/%E9%99%90%E6%B5%81%E7%AD%96%E7%95%A5/">
+                        <span class="chip bg-color">限流策略</span>
                     </a>
                     
                 </div>
@@ -1061,7 +1108,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">272</span>&nbsp;字
+                class="white-color">634</span>&nbsp;字
             
             
             

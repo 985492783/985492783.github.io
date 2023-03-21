@@ -4,11 +4,78 @@
   
     
     <entry>
+      <title>线程池的关闭</title>
+      <link href="/2023/03/22/xian-cheng-chi-de-guan-bi/"/>
+      <url>/2023/03/22/xian-cheng-chi-de-guan-bi/</url>
+      
+        <content type="html"><![CDATA[<p>线程池提供了两种关闭方法</p><ul><li><a href="">shutdown</a></li><li><a href="">shutdownNow</a></li></ul><h3 id="shutdown和shutdownNow"><a href="#shutdown和shutdownNow" class="headerlink" title="shutdown和shutdownNow"></a>shutdown和shutdownNow</h3><p>java的线程池提供了两个关闭的方法，分别是shutdown和shutdownNow，而他们的区别在哪？又是否能真正的关闭线程池？</p><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThreadPoolExecutor</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractExecutorService</span> <span class="token punctuation">&#123;</span>        <span class="token comment">/**     * 线程池的关闭     */</span>    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>        <span class="token keyword">final</span> <span class="token class-name">ReentrantLock</span> mainLock <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>mainLock<span class="token punctuation">;</span>        mainLock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>            <span class="token function">checkShutdownAccess</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token function">advanceRunState</span><span class="token punctuation">(</span><span class="token constant">SHUTDOWN</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token function">interruptIdleWorkers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token function">onShutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// hook for ScheduledThreadPoolExecutor</span>        <span class="token punctuation">&#125;</span> <span class="token keyword">finally</span> <span class="token punctuation">&#123;</span>            mainLock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token punctuation">&#125;</span>        <span class="token function">tryTerminate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token punctuation">&#125;</span>        <span class="token comment">/**     * 立刻关闭线程池     * @return     */</span>    <span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Runnable</span><span class="token punctuation">></span></span> <span class="token function">shutdownNow</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Runnable</span><span class="token punctuation">></span></span> tasks<span class="token punctuation">;</span>        <span class="token keyword">final</span> <span class="token class-name">ReentrantLock</span> mainLock <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>mainLock<span class="token punctuation">;</span>        mainLock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>            <span class="token function">checkShutdownAccess</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token function">advanceRunState</span><span class="token punctuation">(</span><span class="token constant">STOP</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token function">interruptWorkers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            tasks <span class="token operator">=</span> <span class="token function">drainQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token punctuation">&#125;</span> <span class="token keyword">finally</span> <span class="token punctuation">&#123;</span>            mainLock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token punctuation">&#125;</span>        <span class="token function">tryTerminate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token keyword">return</span> tasks<span class="token punctuation">;</span>    <span class="token punctuation">&#125;</span>    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 线程池 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 线程池 </tag>
+            
+            <tag> Java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Nacos注册中心</title>
+      <link href="/2023/03/22/nacos-zhu-ce-zhong-xin/"/>
+      <url>/2023/03/22/nacos-zhu-ce-zhong-xin/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>sentinel限流原理</title>
+      <link href="/2023/03/21/sentinel-xian-liu-yuan-li/"/>
+      <url>/2023/03/21/sentinel-xian-liu-yuan-li/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> sentinel </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> sentinel </tag>
+            
+            <tag> 限流策略 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>数据库隔离级别实现原理</title>
       <link href="/2023/03/21/shu-ju-ku-ge-chi-ji-bie-shi-xian-yuan-li/"/>
       <url>/2023/03/21/shu-ju-ku-ge-chi-ji-bie-shi-xian-yuan-li/</url>
       
-        <content type="html"><![CDATA[<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><blockquote><p>数据库事务是指在同一事务的一组数据操作，要不全部成功，要不全部失败，有一步失败，就要回滚全部操作<br>事务具有原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation）、持久性（Durability）四个特性，简称 ACID，缺一不可。</p></blockquote><h3 id="为什么需要隔离性"><a href="#为什么需要隔离性" class="headerlink" title="为什么需要隔离性"></a>为什么需要隔离性</h3><p>如果没有隔离性，那么会带来很多问题<br>不同的两个事务之间没有屏障，导致数据混乱<br>四个概念：</p><ul><li>脏读<blockquote><p>脏读是指读到了别的事务还没提交的数据。如果A事务的数据尚未提交而被B事务读取，而A事务发生异常回滚，那么会导致B事务读到脏数据</p></blockquote></li><li>幻读<blockquote><p>幻读的意思是一个事务两次对数据查询的条数不一致，例如B事务在A事务的第一个查询的时候没有操作，但是在第二个查询的之前产生了<code>Insert</code>操作并且提交，就会导致两次查询不一致</p></blockquote></li><li>可重复读</li><li>不可重复度</li></ul>]]></content>
+        <content type="html"><![CDATA[<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><blockquote><p>数据库事务是指在同一事务的一组数据操作，要不全部成功，要不全部失败，有一步失败，就要回滚全部操作<br>事务具有原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation）、持久性（Durability）四个特性，简称 ACID，缺一不可。</p></blockquote><h3 id="为什么需要隔离性"><a href="#为什么需要隔离性" class="headerlink" title="为什么需要隔离性"></a>为什么需要隔离性</h3><p>如果没有隔离性，那么会带来很多问题<br>不同的两个事务之间没有屏障，导致数据混乱<br>四个概念：</p><ul><li>脏读<blockquote><p>脏读是指读到了别的事务还没提交的数据。如果A事务的数据尚未提交而被B事务读取，而A事务发生异常回滚，那么会导致B事务读到脏数据</p></blockquote></li><li>幻读<blockquote><p>幻读的意思是一个事务两次对数据查询的条数不一致，例如B事务在A事务的第一个查询的时候没有操作，但是在第二个查询的之前产生了<code>Insert</code>操作并且提交，就会导致两次查询不一致</p></blockquote></li><li>可重复读<blockquote><p>可重复读的意思是在同一个事务任意时刻读到的同一批数据都是一致的。</p></blockquote></li><li>不可重复度<blockquote><p>与可重复读相反，在同一事务的某个时刻读到与第一次读到的数据不一致，一般是被本事务的<code>update</code>所修改</p></blockquote></li></ul><h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><ol><li>读未提交（READ UNCOMMITTED）</li><li>读提交 （READ COMMITTED）</li><li>可重复读 （REPEATABLE READ）</li><li>串行化 （SERIALIZABLE）</li></ol><blockquote><p>从上往下，隔离强度逐渐增强，性能逐渐变差。采用哪种隔离级别要根据系统需求权衡决定，其中，可重复读是 MySQL 的默认级别。</p></blockquote><table><thead><tr><th align="center">隔离级别</th><th align="center">脏读</th><th align="center">不可重复读</th><th align="center">幻读</th></tr></thead><tbody><tr><td align="center">读未提交</td><td align="center">可能</td><td align="center">可能</td><td align="center">可能</td></tr><tr><td align="center">读已提交</td><td align="center">不可能</td><td align="center">可能</td><td align="center">可能</td></tr><tr><td align="center">可重复读</td><td align="center">不可能</td><td align="center">不可能</td><td align="center">可能</td></tr><tr><td align="center">串行化</td><td align="center">不可能</td><td align="center">不可能</td><td align="center">不可能</td></tr></tbody></table><h3 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h3><h3 id="问题一：RR是否可以解决幻读"><a href="#问题一：RR是否可以解决幻读" class="headerlink" title="问题一：RR是否可以解决幻读"></a>问题一：RR是否可以解决幻读</h3>]]></content>
       
       
       <categories>
